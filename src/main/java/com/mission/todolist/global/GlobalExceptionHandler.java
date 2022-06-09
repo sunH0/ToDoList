@@ -1,8 +1,8 @@
-package com.mission.global;
+package com.mission.todolist.global;
 
 
-import com.mission.global.error.BusinessException;
-import com.mission.global.error.ErrorCode;
+import com.mission.todolist.global.error.BusinessException;
+import com.mission.todolist.global.error.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

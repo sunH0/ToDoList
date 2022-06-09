@@ -1,4 +1,4 @@
-package com.mission.global.error;
+package com.mission.todolist.global.error;
 
 
 import lombok.Getter;

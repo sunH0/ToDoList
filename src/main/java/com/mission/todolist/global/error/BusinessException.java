@@ -1,4 +1,4 @@
-package com.mission.global.error;
+package com.mission.todolist.global.error;
 
 public class BusinessException extends RuntimeException {
 

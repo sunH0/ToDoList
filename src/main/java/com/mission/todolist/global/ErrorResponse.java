@@ -1,8 +1,8 @@
-package com.mission.global;
+package com.mission.todolist.global;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mission.global.error.ErrorCode;
+import com.mission.todolist.global.error.ErrorCode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
