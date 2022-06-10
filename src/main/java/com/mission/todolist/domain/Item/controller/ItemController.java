@@ -5,7 +5,9 @@ import com.mission.todolist.domain.Item.dto.ItemResponse;
 import com.mission.todolist.domain.Item.service.ItemService;
 import com.mission.todolist.domain.common.ApiResponse;
 import java.util.List;
+import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,7 +27,7 @@ public class ItemController {
 	private final ItemService itemService;
 
 	@PostMapping
-	public ApiResponse<ItemResponse.ItemInfoResponse> addItem(@RequestBody ItemRequest.CreateRequest request){
+	public ApiResponse<ItemResponse.ItemInfoResponse> addItem(@RequestBody @Validated ItemRequest.CreateRequest request){
 		ItemResponse.ItemInfoResponse response = itemService.createItem(request);
 
 		return ApiResponse.ok(response);
@@ -46,7 +48,7 @@ public class ItemController {
 	}
 
 	@PutMapping("/{id}")
-	public ApiResponse<ItemResponse.ItemInfoResponse> updateTodo(@PathVariable(name = "id") long id, @RequestBody ItemRequest.UpdateRequest content) {
+	public ApiResponse<ItemResponse.ItemInfoResponse> updateTodo(@PathVariable(name = "id") long id, @RequestBody @Validated ItemRequest.UpdateRequest content) {
 		ItemResponse.ItemInfoResponse response = itemService.amendComment(id, content);
 
 		return ApiResponse.ok(response);
