@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Target({ElementType.FIELD})
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {EnumValidator.class})
 public @interface EnumTypeValid {
@@ -18,6 +18,7 @@ public @interface EnumTypeValid {
 	Class<? extends java.lang.Enum<?>> target();
 	Class<? extends Payload>[] payload() default{};
 	boolean ignoreCase() default false;
+	boolean isNull() default false;
 
 }
 

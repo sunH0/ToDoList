@@ -3,6 +3,7 @@ package com.mission.todolist.global;
 
 import com.mission.todolist.global.error.BusinessException;
 import com.mission.todolist.global.error.ErrorCode;
+import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,14 @@ public class GlobalExceptionHandler {
 		log.warn("handleMethodArgumentNotValidException", e);
 		final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE,
 														e.getBindingResult());
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(ConstraintViolationException.class)
+	protected ResponseEntity<ErrorResponse> handleConstraintViolationExceptionException(
+		ConstraintViolationException e) {
+		log.warn("handleConstraintViolationExceptionException", e);
+		final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
