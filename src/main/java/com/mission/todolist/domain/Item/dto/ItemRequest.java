@@ -1,9 +1,10 @@
 package com.mission.todolist.domain.Item.dto;
 
 import com.mission.todolist.domain.Item.entity.Item;
+import com.mission.todolist.domain.Item.entity.ItemStatus;
+import com.mission.todolist.domain.Item.valid.EnumTypeValid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,7 @@ public class ItemRequest {
 		@NotBlank
 		@Size(max = 50)
 		private final String content;
+		@EnumTypeValid(target = ItemStatus.class, message = "잘못된 Status 값 입니다.", ignoreCase = true)
 		private final String status;
 
 		public CreateRequest(String content, String status) {
