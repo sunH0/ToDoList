@@ -59,44 +59,52 @@ export default {
 
     const handler = {
       addTodo: async () => {
+        // AddTodoRequest로 들어올 fields : content, status
         const params = {content: state.content, status: 'active'}
-
+        // todo는 createTodo(request)의 결과값
         const todo = await createTodo(params)
-
+        // view의 state.todos에 todo를 넣어라?
         state.todos.push(todo)
-
+        // view의 state.content는 비워라
         state.content = ''
       },
       fetchTodos: async (status = '') => {
+        // todos는 fetchTodos(status)의 결과값
         const todos = await fetchTodos(status);
-
+        // view의 state.todos는 todos (fetchTodos(status)의 return값은 list?)
         state.todos = (todos);
       },
       updateTodo: async (id) => {
         const index = state.todos.findIndex(todo => todo.id === id)
         const todo = state.todos[index]
 
+        // request로 들어올 params
         const params = {
           content: todo.content
         }
-
+        // updateTodo(id, params) 요청
         await updateTodo(id, params);
-
+        // form창이 닫힌다는건가?
         todo.isEdit = false;
       },
       deleteTodo: async (id) => {
+        // deleteTodo(id) 요청
         await deleteTodo(id);
+        // delete하는 todo의 index를 찾아서 state에서 삭제
         const index = state.todos.findIndex(todo => todo.id === id)
         state.todos.splice(index, 1)
       },
       changeStatus: async (id, status) => {
+        // changeStatus(id, status) 요청
         await changeStatus(id, status);
+        // change하는 todo의 index를 찾아서 state에서 todo의 status 변경
         const index = state.todos.findIndex(todo => todo.id === id)
         state.todos[index].status = status;
       }
     }
 
     onMounted(async () => {
+      // todos 조회
       await handler.fetchTodos();
     })
 
