@@ -1,8 +1,5 @@
 package org.prgms.todolist.domain.entity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -20,8 +17,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "todo")
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class Todo {
+public class Todo extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -29,16 +27,9 @@ public class Todo {
 	private String content;
 	@Enumerated(EnumType.STRING)
 	private TodoStatus status;
-	@Column(name = "updated_at")
-	private LocalDateTime updatedAt;
-
-	public Todo() {
-		this.updatedAt = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
-	}
 
 	public void updateContent(String content) {
 		this.content = content;
-		this.updatedAt = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
 	}
 
 	public void updateStatus(TodoStatus status) {
