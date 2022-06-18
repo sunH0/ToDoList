@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.prgms.todolist.domain.dto.request.TodoCreateReq;
 import org.prgms.todolist.domain.dto.request.TodoUpdateReq;
-import org.prgms.todolist.domain.dto.response.TodoDeleteResp;
 import org.prgms.todolist.domain.dto.response.TodoResp;
 import org.prgms.todolist.domain.service.TodoService;
 import org.springframework.http.ResponseEntity;
@@ -45,17 +44,16 @@ public class TodoController {
 	@PutMapping("/{id}")
 	public ResponseEntity<TodoResp> updateTodo(
 		@PathVariable Long id,
-		@RequestBody TodoUpdateReq todoUpdateReq
+		@Valid @RequestBody TodoUpdateReq todoUpdateReq
 	) {
 		return ResponseEntity.ok(todoService.updateTodo(id, todoUpdateReq));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<TodoDeleteResp> deleteTodo(@PathVariable Long id) {
-		// TODO: 2022-06-14
-		//  Map<String, String> result = new HashMap<>();
-		//  result.put("message", "success");
-		return ResponseEntity.ok(todoService.deleteTodo(id));
+	public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
+		todoService.deleteTodo(id);
+		return ResponseEntity.noContent()
+							 .build();
 	}
 
 	@PatchMapping("/{id}/{status}")
