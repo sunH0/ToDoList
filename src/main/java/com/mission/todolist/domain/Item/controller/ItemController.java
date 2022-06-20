@@ -2,7 +2,9 @@ package com.mission.todolist.domain.Item.controller;
 
 import com.mission.todolist.domain.Item.dto.ItemRequest;
 import com.mission.todolist.domain.Item.dto.ItemResponse;
+import com.mission.todolist.domain.Item.entity.ItemStatus;
 import com.mission.todolist.domain.Item.service.ItemService;
+import com.mission.todolist.domain.Item.valid.EnumTypeValid;
 import com.mission.todolist.domain.common.ApiResponse;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/todos")
@@ -34,14 +37,14 @@ public class ItemController {
 	}
 
 	@GetMapping
-	public ApiResponse<List<ItemResponse.ItemInfoResponse>> getAllTodoByStatus(@RequestParam(name = "status") String status) {
+	public ApiResponse<List<ItemResponse.ItemInfoResponse>> getAllTodoByStatus(@EnumTypeValid(target = ItemStatus.class, isNull = true, ignoreCase = true) @RequestParam(name = "status") String status) {
 		List<ItemResponse.ItemInfoResponse> responses = itemService.getAllTodos(status);
 
 		return ApiResponse.ok(responses);
 	}
 
 	@PatchMapping("/{id}/{status}")
-	public ApiResponse<ItemResponse.ItemInfoResponse> changeStatus(@PathVariable(name = "id") long id, @PathVariable(name = "status") String status) {
+	public ApiResponse<ItemResponse.ItemInfoResponse> changeStatus(@PathVariable(name = "id") long id, @EnumTypeValid(target = ItemStatus.class, ignoreCase = true) @PathVariable(name = "status") String status) {
 		ItemResponse.ItemInfoResponse response = itemService.changeStatus(id, status);
 
 		return ApiResponse.ok(response);

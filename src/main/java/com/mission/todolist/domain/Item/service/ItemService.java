@@ -30,7 +30,7 @@ public class ItemService {
 	@Transactional
 	public ItemResponse.ItemInfoResponse changeStatus(Long id, String status){
 		Item item = getIndexById(id);
-		item.changeStatus(ItemStatus.valueOf(status));
+		item.changeStatus(ItemStatus.of(status));
 
 		return ItemResponse.ItemInfoResponse.of(item);
 	}
@@ -49,7 +49,7 @@ public class ItemService {
 		if(status.isEmpty()) {
 			items = itemRepository.findAll();
 		}else {
-			items = itemRepository.findAllByStatus(ItemStatus.valueOf(status));
+			items = itemRepository.findAllByStatus(ItemStatus.of(status));
 		}
 
 		List<ItemResponse.ItemInfoResponse> responses = new ArrayList<>();

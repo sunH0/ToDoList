@@ -20,8 +20,6 @@ public class ErrorResponse {
 	private String message;
 	private int status;
 	private List<FieldError> errors;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	private LocalDateTime serverDatetime;
 
 	private ErrorResponse(ErrorCode errorCode) {
 		this.message = errorCode.getMessage();
@@ -33,7 +31,6 @@ public class ErrorResponse {
 		this.message = errorCode.getMessage();
 		this.status = errorCode.getStatus();
 		this.errors = errors;
-		this.serverDatetime = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
 	}
 
 	public static ErrorResponse of(ErrorCode errorCode) {
