@@ -17,7 +17,7 @@ public class ItemRequest {
 		@NotBlank
 		@Size(max = 50)
 		private final String content;
-		@EnumTypeValid(target = ItemStatus.class, message = "잘못된 Status 값 입니다.", ignoreCase = true)
+		@EnumTypeValid(enumClass = ItemStatus.class, message = "잘못된 Status 값 입니다.", ignoreCase = true)
 		private final String status;
 
 		public CreateRequest(String content, String status) {

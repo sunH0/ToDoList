@@ -37,14 +37,14 @@ public class ItemController {
 	}
 
 	@GetMapping
-	public ApiResponse<List<ItemResponse.ItemInfoResponse>> getAllTodoByStatus(@EnumTypeValid(target = ItemStatus.class, isNull = true, ignoreCase = true) @RequestParam(name = "status") String status) {
+	public ApiResponse<List<ItemResponse.ItemInfoResponse>> getAllTodoByStatus(@EnumTypeValid(enumClass = ItemStatus.class, isNull = true, ignoreCase = true) @RequestParam(name = "status") String status) {
 		List<ItemResponse.ItemInfoResponse> responses = itemService.getAllTodos(status);
 
 		return ApiResponse.ok(responses);
 	}
 
 	@PatchMapping("/{id}/{status}")
-	public ApiResponse<ItemResponse.ItemInfoResponse> changeStatus(@PathVariable(name = "id") long id, @EnumTypeValid(target = ItemStatus.class, ignoreCase = true) @PathVariable(name = "status") String status) {
+	public ApiResponse<ItemResponse.ItemInfoResponse> changeStatus(@PathVariable(name = "id") long id, @EnumTypeValid(enumClass = ItemStatus.class, ignoreCase = true) @PathVariable(name = "status") String status) {
 		ItemResponse.ItemInfoResponse response = itemService.changeStatus(id, status);
 
 		return ApiResponse.ok(response);
