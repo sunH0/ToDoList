@@ -13,9 +13,9 @@ import javax.validation.Payload;
 @Constraint(validatedBy = {EnumValidator.class})
 public @interface EnumTypeValid {
 
-	String message() default "invalid parameter!!";
+	String message() default "invalid data!!";
 	Class<?>[] groups() default {};
-	Class<? extends java.lang.Enum<?>> target();
+	Class<? extends java.lang.Enum<?>> enumClass();
 	Class<? extends Payload>[] payload() default{};
 	boolean ignoreCase() default false;
 	boolean isNull() default false;

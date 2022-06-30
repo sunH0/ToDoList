@@ -10,6 +10,7 @@ import com.mission.todolist.global.error.ItemNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +31,7 @@ public class ItemService {
 	@Transactional
 	public ItemResponse.ItemInfoResponse changeStatus(Long id, String status){
 		Item item = getIndexById(id);
-		item.changeStatus(ItemStatus.of(status));
+		item.changeStatus(ItemStatus.find(status.toUpperCase()));
 
 		return ItemResponse.ItemInfoResponse.of(item);
 	}
@@ -49,7 +50,7 @@ public class ItemService {
 		if(status.isEmpty()) {
 			items = itemRepository.findAll();
 		}else {
-			items = itemRepository.findAllByStatus(ItemStatus.of(status));
+			items = itemRepository.findAllByStatus(ItemStatus.find(status.toUpperCase()));
 		}
 
 		List<ItemResponse.ItemInfoResponse> responses = new ArrayList<>();
@@ -63,10 +64,11 @@ public class ItemService {
 
 	@Transactional
 	public void removeItem(Long id){
-		if(!existsById(id)){
+		try {
+			itemRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
 			throw new ItemNotFoundException(ErrorCode.ITEM_NOT_FOUND);
 		}
-		itemRepository.deleteById(id);
 	}
 
 	private boolean existsById(Long id){
